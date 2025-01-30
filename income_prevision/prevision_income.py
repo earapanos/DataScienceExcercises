@@ -1,5 +1,4 @@
 import pandas as pd
-import seaborn as sns
 import matplotlib.pyplot as plt
 import streamlit as st
 
@@ -22,81 +21,53 @@ def point(_df):
     for var in var_qualitativo:
         st.markdown(f'#### Stability of the explanatory variable {var} over time:')
         fig, ax = plt.subplots(figsize=(20, 5))
-        sns.pointplot(data=previsao_renda_filter,
-                      x='data_ref',
-                      y='renda',
-                      hue=var,
-                      dodge=True,
-                      errorbar=('ci', 95),
-                      ax=ax)
-        tick_data = previsao_renda_filter['data_ref'].map(lambda data: data.strftime('%m/%Y')).unique()
-        tick_data.tolist()
-        ticks = ax.set_xticks(list(range(previsao_renda_filter['data_ref'].nunique())))
-        labels = ax.set_xticklabels(tick_data, rotation=45)
-        plt.xlabel('Time')
-        plt.ylabel('Average Income ($)')
-        plt.legend(bbox_to_anchor=(1.05, 1),
-                   loc=2,
-                   borderaxespad=0,
-                   title=var.capitalize())
+        
+        # Group by date and categorical variable, then calculate mean income
+        grouped = _df.groupby(['data_ref', var])['renda'].mean().unstack()
+        
+        # Plot using matplotlib
+        for col in grouped.columns:
+            ax.plot(grouped.index, grouped[col], label=col)
+        
+        tick_data = _df['data_ref'].map(lambda data: data.strftime('%m/%Y')).unique()
+        ax.set_xticks(range(len(tick_data)))
+        ax.set_xticklabels(tick_data, rotation=45)
+        ax.set_xlabel('Time')
+        ax.set_ylabel('Average Income ($)')
+        ax.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0, title=var.capitalize())
         st.pyplot(fig)
 
 # Function to Create a Single Stability Plot
 def point_unico(_var: str):
     ''' Receives a string of a categorical variable and returns
     a point plot of average income over time for the distribution of the variable '''
-    if _var == 'sexo':
-        st.markdown(f'#### Stability of the explanatory variable {_var} over time:')
-    elif _var == 'posse_de_veiculo':
-        st.markdown(f'#### Stability of the explanatory variable {_var} over time:')
-    elif _var == 'posse_de_imovel':
-        st.markdown(f'#### Stability of the explanatory variable {_var} over time:')
-    elif _var == 'tipo_renda':
-        st.markdown(f'#### Stability of the explanatory variable {_var} over time:')
-    elif _var == 'educacao':
-        st.markdown(f'#### Stability of the explanatory variable {_var} over time:')
-    elif _var == 'estado_civil':
-        st.markdown(f'#### Stability of the explanatory variable {_var} over time:')
-    elif _var == 'tipo_residencia':
-        st.markdown(f'#### Stability of the explanatory variable {_var} over time:')
-
+    st.markdown(f'#### Stability of the explanatory variable {_var} over time:')
+    
     fig, ax = plt.subplots(figsize=(20, 5))
-    sns.pointplot(data=previsao_renda_filter,
-                  x='data_ref',
-                  y='renda',
-                  hue=_var,
-                  dodge=True,
-                  errorbar=('ci', 95),
-                  ax=ax)
+    
+    # Group by date and categorical variable, then calculate mean income
+    grouped = previsao_renda_filter.groupby(['data_ref', _var])['renda'].mean().unstack()
+    
+    # Plot using matplotlib
+    for col in grouped.columns:
+        ax.plot(grouped.index, grouped[col], label=col)
+    
     tick_data = previsao_renda_filter['data_ref'].map(lambda data: data.strftime('%m/%Y')).unique()
-    tick_data.tolist()
-    ticks = ax.set_xticks(list(range(previsao_renda_filter['data_ref'].nunique())))
-    labels = ax.set_xticklabels(tick_data, rotation=45)
-    plt.xlabel('Time')
-    plt.ylabel('Average Income ($)')
-    plt.legend(bbox_to_anchor=(1.05, 1),
-               loc=2,
-               borderaxespad=0,
-               title=_var.capitalize())
+    ax.set_xticks(range(len(tick_data)))
+    ax.set_xticklabels(tick_data, rotation=45)
+    ax.set_xlabel('Time')
+    ax.set_ylabel('Average Income ($)')
+    ax.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0, title=_var.capitalize())
     st.pyplot(fig)
 
+# Function to Create Histograms
 def hist(_var: str):
-    if _var == 'renda':
-        st.markdown(f'##### Distribution of the quantitative variable {_var}:')
-    elif _var == 'qtd_filhos':
-        st.markdown(f'##### Distribution of the quantitative variable {_var}:')
-    elif _var == 'idade':
-        st.markdown(f'##### Distribution of the quantitative variable {_var}:')
-    elif _var == 'tempo_emprego':
-        st.markdown(f'##### Distribution of the quantitative variable {_var}:')
-    elif _var == 'qt_pessoas_residencia':
-        st.markdown(f'##### Distribution of the quantitative variable {_var}:')
-
+    st.markdown(f'##### Distribution of the quantitative variable {_var}:')
+    
     fig, ax = plt.subplots(figsize=(20, 5))
-    sns.histplot(previsao_renda_filter,
-                 x=_var,
-                 kde=True)
-    plt.ylabel('Count')
+    ax.hist(previsao_renda_filter[_var], bins=30, edgecolor='black', alpha=0.7)
+    ax.set_xlabel(_var.capitalize())
+    ax.set_ylabel('Count')
     st.pyplot(fig)
 
 @st.cache_data
@@ -106,10 +77,9 @@ def hist_todos(_df: pd.DataFrame):
     for var in var_quantitativo:
         st.markdown(f'##### Distribution of the quantitative variable {var}:')
         fig, ax = plt.subplots(figsize=(20, 5))
-        sns.histplot(_df,
-                     x=var,
-                     kde=True)
-        plt.ylabel('Count')
+        ax.hist(_df[var], bins=30, edgecolor='black', alpha=0.7)
+        ax.set_xlabel(var.capitalize())
+        ax.set_ylabel('Count')
         st.pyplot(fig)
 
 # Page Configuration
@@ -183,20 +153,7 @@ else:  # Continue to configure only one plot
     tab_freq = pd.crosstab(previsao_renda_filter['data_ref'], previsao_renda_filter[selectbox_var_comp])
 
     # Select the title to display
-    if selectbox_var_comp == 'sexo':
-        st.markdown(f'##### Distribution of the explanatory variable {selectbox_var_comp} over time:')
-    elif selectbox_var_comp == 'posse_de_veiculo':
-        st.markdown(f'##### Distribution of the explanatory variable {selectbox_var_comp} over time:')
-    elif selectbox_var_comp == 'posse_de_imovel':
-        st.markdown(f'##### Distribution of the explanatory variable {selectbox_var_comp} over time:')
-    elif selectbox_var_comp == 'tipo_renda':
-        st.markdown(f'##### Distribution of the explanatory variable {selectbox_var_comp} over time:')
-    elif selectbox_var_comp == 'educacao':
-        st.markdown(f'##### Distribution of the explanatory variable {selectbox_var_comp} over time:')
-    elif selectbox_var_comp == 'estado_civil':
-        st.markdown(f'##### Distribution of the explanatory variable {selectbox_var_comp} over time:')
-    elif selectbox_var_comp == 'tipo_residencia':
-        st.markdown(f'##### Distribution of the explanatory variable {selectbox_var_comp} over time:')
+    st.markdown(f'##### Distribution of the explanatory variable {selectbox_var_comp} over time:')
 
     chosen = st.sidebar.radio(  # Options for viewing the plots
         'Choose how to view the distribution:',
@@ -222,20 +179,7 @@ else:  # Continue to configure only one plot
         tab_freq = pd.crosstab(previsao_renda_filter['data_ref'], previsao_renda_filter[selectbox_var_comp])
 
         # Select the title to display
-        if selectbox_var_comp == 'sexo':
-            st.markdown(f'##### Distribution of the explanatory variable {selectbox_var_comp} over time:')
-        elif selectbox_var_comp == 'posse_de_veiculo':
-            st.markdown(f'##### Distribution of the explanatory variable {selectbox_var_comp} over time:')
-        elif selectbox_var_comp == 'posse_de_imovel':
-            st.markdown(f'##### Distribution of the explanatory variable {selectbox_var_comp} over time:')
-        elif selectbox_var_comp == 'tipo_renda':
-            st.markdown(f'##### Distribution of the explanatory variable {selectbox_var_comp} over time:')
-        elif selectbox_var_comp == 'educacao':
-            st.markdown(f'##### Distribution of the explanatory variable {selectbox_var_comp} over time:')
-        elif selectbox_var_comp == 'estado_civil':
-            st.markdown(f'##### Distribution of the explanatory variable {selectbox_var_comp} over time:')
-        elif selectbox_var_comp == 'tipo_residencia':
-            st.markdown(f'##### Distribution of the explanatory variable {selectbox_var_comp} over time:')
+        st.markdown(f'##### Distribution of the explanatory variable {selectbox_var_comp} over time:')
 
         chosen_comp = st.sidebar.radio(  # Options for viewing the plots
             'Choose how to view the distribution: ',
