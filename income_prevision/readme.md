@@ -38,3 +38,5 @@ The model effectively predicts customer income, enabling financial institutions 
 - Explore other machine learning algorithms (e.g., Random Forest, Gradient Boosting) for improved performance.
 - Implement the model in a real-time system for automated decision-making.
 
+## Streamlit
+- You can access the project on streamlit: 
