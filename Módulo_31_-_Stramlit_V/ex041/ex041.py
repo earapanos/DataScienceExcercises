@@ -73,14 +73,14 @@ def main():
 
     st.sidebar.markdown('''
                         <div style="text-align:center">
-                            <img src="https://raw.githubusercontent.com/rhatiro/previsao-renda/main/ebac-course-utils/media/logo/newebac_logo_black_half.png" alt="ebac-logo" width=50%>
+                            <img src="https://raw.githubusercontent.com/earapanos/DataScienceExcercises/refs/heads/main/ebac_logo-data_science.png" alt="ebac-logo" width=50%>
                         </div>
 
                         # **Profissão: Cientista de Dados**
                         ### **Projeto de Agrupamento Hierárquico**
 
-                        **Por:** [Roberto Hatiro Nishiyama](https://www.linkedin.com/in/rhatiro/)<br>
-                        **Data:** 30 de novembro de 2023.<br>
+                        **Por:** [Eduardo Adriani Rapanos](https://www.linkedin.com/in/eduardo-rapanos/)<br>
+                        **Data:** 14 de maio de 2025.<br>
 
                         ---
                         ''', unsafe_allow_html=True)

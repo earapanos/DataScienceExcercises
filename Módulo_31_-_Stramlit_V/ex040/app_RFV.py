@@ -68,18 +68,18 @@ def main():
     st.markdown(
         """
     <div style="text-align:center">
-        <a href="https://github.com/rhatiro/Curso_EBAC-Profissao_Cientista_de_Dados">
-            <img src="https://raw.githubusercontent.com/rhatiro/Curso_EBAC-Profissao_Cientista_de_Dados/main/ebac-course-utils/media/logo/ebac_logo-data_science.png" alt="ebac_logo-data_science" width=100%>
+        <a href="https://github.com/earapanos/DataScienceExcercises.git">
+            <img src="https://raw.githubusercontent.com/earapanos/DataScienceExcercises/refs/heads/main/M%C3%B3dulo_19_-_Streamlit_II/ex031/img/telmarketing_icon.png" alt="ebac_logo-data_science" width=100%>
         </a>
-    </div> 
+    </div>
 
     ---
 
     <!-- # **Profissão: Cientista de Dados** -->
     ### **Módulo 31** | Streamlit V | Exercício 1
 
-    **Aluno:** [Roberto Hatiro Nishiyama](https://www.linkedin.com/in/rhatiro/)<br>
-    **Data:** 23 de novembro de 2023.
+    **Aluno:** [Eduardo Adriani Rapanos](https://www.linkedin.com/in/eduardo-rapanos/)<br>
+    **Data:** 14 de novembro de 2025.
 
     ---
     """,
