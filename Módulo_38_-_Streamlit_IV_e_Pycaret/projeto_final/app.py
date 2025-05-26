@@ -61,7 +61,7 @@ def main():
         elif model_choice == "Regressão Logística (sklearn)":
             # Carregar o pipeline de regressão logística
             # Carregue o pipeline correto
-            pipeline = joblib.load('model_regressao_logistica.pkl')
+            pipeline = joblib.load('model_regressao_logistica')
 
             # Fazendo a previsão com o pipeline (sklearn)
             predict = pipeline.predict(df_credit)  # Use o predict do sklearn
