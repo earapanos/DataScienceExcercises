@@ -15,7 +15,7 @@ uploaded_file = st.file_uploader("Escolha um arquivo CSV", type="csv")
 
 # Carregar o modelo treinado
 @st.cache_resource
-def load_model(path=r'C:\Users\earap\Documents\EBAC\DataScienceExcercises\Módulo_38_-_Streamlit_IV_e_Pycaret\projeto_final\modelo_credit_scoring_lgbm.pkl'):
+def load_model(path='modelo_credit_scoring_lgbm.pkl'):
     return joblib.load(path)
 
 model = load_model()
