@@ -1,11 +1,9 @@
-# app.py
-
 import streamlit as st
 import pandas as pd
 import numpy as np
-import joblib
-from sklearn.pipeline import Pipeline
 import urllib.request
+import os
+from pycaret.classification import load_model
 
 # Título
 st.title("Credit Scoring - Streamlit App")
@@ -14,14 +12,16 @@ st.markdown("Upload um arquivo `.csv` para escoragem com o modelo treinado.")
 # Upload de arquivo
 uploaded_file = st.file_uploader("Escolha um arquivo CSV", type="csv")
 
-# Carregar o modelo treinado
+# Carregar o modelo treinado com cache
 @st.cache_resource
-def load_model():
+def load_model_from_url():
     url = "https://raw.githubusercontent.com/earapanos/DataScienceExcercises/main/M%C3%B3dulo_38_-_Streamlit_IV_e_Pycaret/projeto_final/modelo_credit_scoring_lgbm.pkl"
     filename = "modelo_credit_scoring_lgbm.pkl"
-    urllib.request.urlretrieve(url, filename)
-    return joblib.load(filename)
-model = load_model()
+    if not os.path.exists(filename):
+        urllib.request.urlretrieve(url, filename)
+    return load_model(filename)
+
+model = load_model_from_url()
 
 # Carregar e processar os dados
 if uploaded_file is not None:
