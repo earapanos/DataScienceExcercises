@@ -2,6 +2,7 @@ streamlit>=1.32
 pandas>=1.5
 scikit-learn==1.2.2
 pycaret==3.0.0
-xlsxwriter
+joblib==1.2.0
 scikit-plot==0.3.7
 scipy==1.11.4
+xlsxwriter
