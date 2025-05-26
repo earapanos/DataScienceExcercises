@@ -15,9 +15,11 @@ uploaded_file = st.file_uploader("Escolha um arquivo CSV", type="csv")
 
 # Carregar o modelo treinado
 @st.cache_resource
-def load_model(path='modelo_credit_scoring_lgbm.pkl'):
-    return joblib.load(path)
-
+def load_model():
+    url = "https://raw.githubusercontent.com/earapanos/DataScienceExcercises/main/M%C3%B3dulo_38_-_Streamlit_IV_e_Pycaret/projeto_final/modelo_credit_scoring_lgbm.pkl"
+    filename = "modelo_credit_scoring_lgbm.pkl"
+    urllib.request.urlretrieve(url, filename)
+    return joblib.load(filename)
 model = load_model()
 
 # Carregar e processar os dados
