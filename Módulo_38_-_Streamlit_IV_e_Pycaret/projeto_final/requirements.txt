@@ -1,4 +1,4 @@
-altair==5.4.1
+altair>=4.2.2
 asttokens==2.4.1
 attrs==24.2.0
 blinker==1.8.2
