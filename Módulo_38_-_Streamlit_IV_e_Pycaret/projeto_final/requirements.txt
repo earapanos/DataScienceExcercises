@@ -2,7 +2,6 @@ streamlit>=1.32
 pandas>=1.5
 scikit-learn==1.2.2
 pycaret==3.0.0
-lightgbm>=3.3
-joblib>=1.2
-numpy>=1.21
-urllib3>=1.26,<2.2
+xlsxwriter
+scikit-plot==0.3.7
+scipy==1.11.4
