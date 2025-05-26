@@ -5,6 +5,7 @@ import pandas as pd
 import numpy as np
 import joblib
 from sklearn.pipeline import Pipeline
+import urllib.request
 
 # Título
 st.title("Credit Scoring - Streamlit App")

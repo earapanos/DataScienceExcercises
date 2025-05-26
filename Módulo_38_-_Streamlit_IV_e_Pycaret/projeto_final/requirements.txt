@@ -14,3 +14,4 @@ lightgbm>=4.0.0
 
 # PyCaret 3.x (versão compatível com Python 3.11)
 pycaret>=3.0.0
+urllib3>=1.26,<2.2
