@@ -31,7 +31,7 @@ def main():
             st.dataframe(df.head())
 
             # Carregar modelo treinado
-            model = load_model("modelo_credit_scoring_lgbm.pkl")
+            model = load_model(r"C:\Users\earap\Documents\EBAC\DataScienceExcercises\Módulo_38_-_Streamlit_IV_e_Pycaret\projeto_final\modelo_credit_scoring_lgbm.pkl")
 
             # Aplicar predições
             results = predict_model(model, data=df)
